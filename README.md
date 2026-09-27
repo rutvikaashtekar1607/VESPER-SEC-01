@@ -1,10 +1,10 @@
 # 🔐 VESPER-SEC-01: Cryptographic Benchmarking Under Emulation
 
-**Author:** Rutvika Mahadev Ashtekar  
-**Programme:** VISVAMBHARA Weeks 4–12  
-**Domain:** 🛡️ Cybersecurity (Option A)  
-**Project:** 🐝 Nano-Bee Secure Communications  
-**Week 4 Status:** ✅ **COMPLETE**
+**Author:** Rutvika Mahadev Ashtekar
+**Programme:** VISVAMBHARA Weeks 4–12
+**Domain:** 🛡️ Cybersecurity (Option A)
+**Project:** 🐝 Nano-Bee Secure Communications
+**Week 5 Status:** ✅ **COMPLETE**
 
 ---
 
@@ -13,43 +13,44 @@
 The **Nano-Bee** is a tiny autonomous swarm robot that needs to talk securely with a control system. Problem? It's got almost no compute power, limited RAM, and a small battery.
 
 This project answers one question:
+
 > **Which encryption algorithms can actually run on Nano-Bee without killing its battery?**
 
 I'm testing **4 different encryption methods** to see which ones fit:
 
-| Encryption | Type | Purpose |
-|-----------|------|---------|
-| 🔐 **Ascon v1.2** | Lightweight | Made for IoT & tiny devices |
-| 🔐 **ChaCha20-Poly1305** | Symmetric | Fast & proven |
-| 🔐 **Kyber-512** | Post-Quantum | Future-proof security |
-| 🔐 **SPHINCS+** | Post-Quantum | Quantum-safe signatures |
+| Encryption               | Type         | Purpose                     |
+| ------------------------ | ------------ | --------------------------- |
+| 🔐 **Ascon v1.2**        | Lightweight  | Made for IoT & tiny devices |
+| 🔐 **ChaCha20-Poly1305** | Symmetric    | Fast & proven               |
+| 🔐 **Kyber-512**         | Post-Quantum | Future-proof security       |
+| 🔐 **SPHINCS+**          | Post-Quantum | Quantum-safe signatures     |
 
-**Tool:** Renode (a simulator that acts like real hardware)  
-**Measurement:** How fast? How much RAM? How much power?  
+**Tool:** Renode (a simulator that acts like real hardware)
+**Measurement:** How fast? How much RAM? How much power?
 **Result:** Feasible ✅ or Not Feasible ❌
 
 ---
 
 ## 📊 Quick Facts
 
-| 📌 Detail | 📌 Value |
-|-----------|---------|
-| 🎯 Target Hardware | STM32F407 (ARM Cortex-M4 @ 168 MHz) |
-| 💻 Compute Available | 18 MHz (out of 168 MHz) |
-| 💾 RAM Available | 50 KB (out of 192 KB) |
-| 🔋 Power Available | ~14.1 mW peak |
-| 🖥️ Emulator Used | Renode (cycle-accurate) |
-| 🔧 Build Tool | Arm GNU Toolchain |
-| 📚 References | 18 academic papers |
-| ✅ Test Location | Local laptop only (safe!) |
+| 📌 Detail            | 📌 Value                            |
+| -------------------- | ----------------------------------- |
+| 🎯 Target Hardware   | STM32F407 (ARM Cortex-M4 @ 168 MHz) |
+| 💻 Compute Available | 18 MHz (out of 168 MHz)             |
+| 💾 RAM Available     | 50 KB (out of 192 KB)               |
+| 🔋 Power Available   | ~14.1 mW peak                       |
+| 🖥️ Emulator Used    | Renode (cycle-accurate)             |
+| 🔧 Build Tool        | Arm GNU Toolchain                   |
+| 📚 References        | 18 academic papers                  |
+| ✅ Test Location      | Local laptop only (safe!)           |
 
 ---
 
 ## 📁 What's In This Repository
 
-This is what I **actually have** right now (Week 4):
+This is what I **actually have** right now (Week 5):
 
-```
+````
 VESPER-SEC-01/
 │
 ├─ 📄 README.md                          ← You are here
@@ -67,12 +68,16 @@ VESPER-SEC-01/
 │     ├─ renode_execution_proof.png
 │     └─ renode_cycle_verification.png
 │
+├─ 📂 week5/                             ← Week 5 analytical work
+│  ├─ VESPER-SEC-01-Week5-Deliverable.pdf       ✅ Analytical model
+│  └─ VESPER-SEC-01-Week5-Progress-Report.pdf  ✅ Progress report
+│
 ├─ 💻 cycle_test.c                       ← Test code
 └─ 💻 cycle_test.elf                     ← Compiled binary
 
 ---
 
-## ✅ What's Finished (Week 4)
+## ✅ What's Finished (Week 5)
 
 ### 📝 Proposal Document
 
@@ -101,6 +106,23 @@ VESPER-SEC-01/
 
 **Proof:** Screenshots in `verification/screenshots/` 📸
 
+### 📐 Week 5 Analytical Model
+
+✅ **Week 5 analytical model completed** with:
+
+- 📌 Governing equations for cycle measurement
+- 📌 Cycles/byte model
+- 📌 Energy-per-operation model
+- 📌 Memory and resource feasibility criteria
+- 📌 FEASIBLE / MARGINAL / NOT FEASIBLE classification
+- 📌 Kyber-512 cycle-accuracy validation criterion
+- 📌 10% validation threshold
+- 📌 Analytical limiting cases
+- 📌 Explicit separation of facts and project assumptions
+- 📌 Week 5 → Week 6 measurement boundary
+
+**Important:** No new cryptographic benchmark numbers were produced in Week 5. Actual cryptographic execution and measurement remain Week 6 activities.
+
 ---
 
 ## 🚀 How to Use This Repo
@@ -110,7 +132,7 @@ VESPER-SEC-01/
 ```bash
 git clone https://github.com/rutvikaashtekar1607/VESPER-SEC-01.git
 cd VESPER-SEC-01
-```
+````
 
 ### Step 2️⃣: Check Tools Are Installed
 
@@ -121,6 +143,7 @@ renode --version
 ```
 
 Should show:
+
 ```
 arm-none-eabi-gcc (GNU Arm Embedded Toolchain 12.2.1)...
 QEMU emulator version 11.1.0...
@@ -130,6 +153,7 @@ Renode 1.14...
 ### Step 3️⃣: View Evidence
 
 All verification screenshots:
+
 ```
 verification/screenshots/
   ├─ gcc_version.png
@@ -145,12 +169,12 @@ verification/screenshots/
 
 **Where does testing happen?**
 
-| ✅ YES | ❌ NO |
-|--------|-------|
-| 💻 Renode emulation on my laptop | 🖥️ Physical hardware |
-| 📡 STM32F4 simulator model | 🌐 External networks |
-| 🔒 Isolated & safe | 📱 Third-party systems |
-| 👤 Just me, local machine | 🤝 Other people's devices |
+| ✅ YES                            | ❌ NO                      |
+| -------------------------------- | ------------------------- |
+| 💻 Renode emulation on my laptop | 🖥️ Physical hardware     |
+| 📡 STM32F4 simulator model       | 🌐 External networks      |
+| 🔒 Isolated & safe               | 📱 Third-party systems    |
+| 👤 Just me, local machine        | 🤝 Other people's devices |
 
 **All work is 100% isolated & safe.**
 
@@ -161,15 +185,16 @@ verification/screenshots/
 **These are MY assumptions based on STM32F4 datasheet:**
 
 | 📌 Resource | 📌 Total | 📌 Available for Crypto | 📌 Reserved |
-|-----------|---------|------------------------|-----------|
-| 💻 Compute | 168 MHz | 18 MHz | 150 MHz |
-| 💾 RAM | 192 KB | 50 KB | 142 KB |
-| 🔋 Power | ~100 mW | ~14.1 mW | ~86 mW |
+| ----------- | -------- | ----------------------- | ----------- |
+| 💻 Compute  | 168 MHz  | 18 MHz                  | 150 MHz     |
+| 💾 RAM      | 192 KB   | 50 KB                   | 142 KB      |
+| 🔋 Power    | ~100 mW  | ~14.1 mW                | ~86 mW      |
 
 **How I calculated power:**
-- Datasheet says: 238 µA per MHz at 3.3V
-- My allocation: 18 MHz × 238 µA = 4,284 µA = 4.284 mA
-- Power: 4.284 mA × 3.3V = **14.1 mW**
+
+* Datasheet says: 238 µA per MHz at 3.3V
+* My allocation: 18 MHz × 238 µA = 4,284 µA = 4.284 mA
+* Power: 4.284 mA × 3.3V = **14.1 mW**
 
 **⚠️ These could change** if the project gets an official Nano-Bee spec.
 
@@ -178,19 +203,20 @@ verification/screenshots/
 ## 📚 References
 
 All **18 papers** are in:
+
 ```
 proposal/references.bib
 ```
 
 **Top papers I'm using:**
 
-| 📖 Paper | 📖 Why It Matters |
-|----------|-----------------|
-| 🔐 Ascon | NIST standard for lightweight encryption |
-| 🔐 Heinz 2021 | Kyber-512 on Cortex-M4 (my benchmark!) |
-| 🔐 RFC 8439 | ChaCha20-Poly1305 official standard |
-| 📖 Yiu 2013 | ARM Cortex-M4 instruction manual |
-| 🔐 Bos et al. 2018 | Kyber design & how it works |
+| 📖 Paper           | 📖 Why It Matters                        |
+| ------------------ | ---------------------------------------- |
+| 🔐 Ascon           | NIST standard for lightweight encryption |
+| 🔐 Heinz 2021      | Kyber-512 on Cortex-M4 (my benchmark!)   |
+| 🔐 RFC 8439        | ChaCha20-Poly1305 official standard      |
+| 📖 Yiu 2013        | ARM Cortex-M4 instruction manual         |
+| 🔐 Bos et al. 2018 | Kyber design & how it works              |
 
 ---
 
@@ -198,12 +224,12 @@ proposal/references.bib
 
 For **each encryption algorithm**, I measure:
 
-| 📏 Metric | 📏 What It Means |
-|----------|-----------------|
+| 📏 Metric       | 📏 What It Means                            |
+| --------------- | ------------------------------------------- |
 | **Cycles/byte** | CPU cycles needed to encrypt 1 byte of data |
-| **Peak RAM** | Maximum memory used during operation (KB) |
-| **Code size** | How big the compiled program is (KB) |
-| **Energy/op** | Power consumed per operation (µJ) |
+| **Peak RAM**    | Maximum memory used during operation (KB)   |
+| **Code size**   | How big the compiled program is (KB)        |
+| **Energy/op**   | Power consumed per operation (µJ)           |
 
 Then I check: **Does it fit in the 18 MHz / 50 KB / 14.1 mW budget?**
 
@@ -213,13 +239,13 @@ Result: ✅ **FEASIBLE** or ❌ **NOT FEASIBLE**
 
 ## 🚨 What I'm NOT Claiming Yet
 
-| ❌ NOT Done | ⏳ When Done |
-|-----------|-----------|
-| Actual crypto benchmark numbers | Week 6+ |
-| Kyber-512 validation | Week 5 |
-| Secure boot integration | Week 9 |
-| Stress testing | Week 10 |
-| Final 25-page report | Week 11 |
+| ❌ NOT Done                      | ⏳ When Done |
+| ------------------------------- | ----------- |
+| Actual crypto benchmark numbers | Week 6+     |
+| Kyber-512 validation            | **Week 6**  |
+| Secure boot integration         | Week 9      |
+| Stress testing                  | Week 10     |
+| Final 25-page report            | Week 11     |
 
 **I'm being honest about this.** No fake numbers. No pretending things are done when they're not.
 
@@ -227,11 +253,11 @@ Result: ✅ **FEASIBLE** or ❌ **NOT FEASIBLE**
 
 ## 📞 Contact Info
 
-| 📱 Contact | 🔗 Link |
-|-----------|--------|
-| 👤 **GitHub** | [rutvikaashtekar1607](https://github.com/rutvikaashtekar1607) |
-| 💼 **LinkedIn** | [Rutvika Ashtekar](https://www.linkedin.com/in/rutvikaashtekar07/) |
-| 🏫 **Programme** | VISVAMBHARA (VESPER Cybersecurity) |
+| 📱 Contact       | 🔗 Link                                                            |
+| ---------------- | ------------------------------------------------------------------ |
+| 👤 **GitHub**    | [rutvikaashtekar1607](https://github.com/rutvikaashtekar1607)      |
+| 💼 **LinkedIn**  | [Rutvika Ashtekar](https://www.linkedin.com/in/rutvikaashtekar07/) |
+| 🏫 **Programme** | VISVAMBHARA (VESPER Cybersecurity)                                 |
 
 ---
 
@@ -239,14 +265,28 @@ Result: ✅ **FEASIBLE** or ❌ **NOT FEASIBLE**
 
 ### ✅ Week 4 Complete
 
-- ✅ Installed 3 tools (GCC, QEMU, Renode)
-- ✅ Verified tools with real firmware
-- ✅ Passed cycle-accuracy sanity check
-- ✅ Wrote 7-page proposal
-- ✅ Collected 18 academic references
-- ✅ Created evidence screenshots
-- ✅ Set up GitHub repo
-- ✅ Created this README
+* ✅ Installed 3 tools (GCC, QEMU, Renode)
+* ✅ Verified tools with real firmware
+* ✅ Passed cycle-accuracy sanity check
+* ✅ Wrote 7-page proposal
+* ✅ Collected 18 academic references
+* ✅ Created evidence screenshots
+* ✅ Set up GitHub repo
+* ✅ Created this README
+
+### ✅ Week 5 Complete
+
+* ✅ Prepared first analytical model
+* ✅ Defined governing equations
+* ✅ Defined cycle/byte calculation
+* ✅ Defined energy-per-operation model
+* ✅ Defined resource feasibility criteria
+* ✅ Defined Kyber-512 validation equation
+* ✅ Defined 10% validation threshold
+* ✅ Identified analytical limiting cases
+* ✅ Separated project assumptions from datasheet facts
+* ✅ Completed Week 5 progress report
+* ✅ Kept actual crypto execution and benchmark results for Week 6
 
 ---
 
@@ -254,30 +294,34 @@ Result: ✅ **FEASIBLE** or ❌ **NOT FEASIBLE**
 
 If you're reviewing this:
 
-| 📍 Question | 📍 Answer |
-|-----------|----------|
-| Where's the proposal? | `proposal/VESPER-SEC-01-Proposal.docx` |
-| Where's the evidence? | `verification/screenshots/` |
-| Are budget numbers real? | Stated honestly (my assumptions, not official) |
-| Any fake benchmarks? | ❌ No - none claimed yet |
-| Why no results yet? | Week 6 is when benchmarking happens |
-| Questions? | Check the proposal - all details there |
+| 📍 Question                         | 📍 Answer                                       |
+| ----------------------------------- | ----------------------------------------------- |
+| Where's the proposal?               | `proposal/VESPER-SEC-01-Proposal.docx`          |
+| Where's the Week 5 model?           | `week5/VESPER-SEC-01-Week5-Deliverable.pdf`     |
+| Where's the Week 5 progress report? | `week5/VESPER-SEC-01-Week5-Progress-Report.pdf` |
+| Where's the evidence?               | `verification/screenshots/`                     |
+| Are budget numbers real?            | Stated honestly (my assumptions, not official)  |
+| Any fake benchmarks?                | ❌ No - none claimed yet                         |
+| Why no results yet?                 | Week 6 is when benchmarking happens             |
+| Questions?                          | Check the proposal and Week 5 analytical model  |
 
 ---
 
 ## 🎉 Summary
 
-| 🎯 What | 📊 Status |
-|--------|----------|
-| **Proposal** | ✅ Complete (7 pages) |
-| **Tools Installed** | ✅ Complete (3/3) |
-| **Toolchain Verified** | ✅ Complete (screenshots) |
-| **Cycle Test** | ✅ Passed (0.3% error) |
-| **Documentation** | ✅ Complete (honest & clear) |
-| **Ready for Week 5** | ✅ YES |
+| 🎯 What                     | 📊 Status                   |
+| --------------------------- | --------------------------- |
+| **Proposal**                | ✅ Complete (7 pages)        |
+| **Tools Installed**         | ✅ Complete (3/3)            |
+| **Toolchain Verified**      | ✅ Complete (screenshots)    |
+| **Cycle Test**              | ✅ Passed (0.3% error)       |
+| **Week 5 Analytical Model** | ✅ Complete                  |
+| **Week 5 Progress Report**  | ✅ Complete                  |
+| **Documentation**           | ✅ Complete (honest & clear) |
+| **Ready for Week 6**        | ✅ YES                       |
 
 ---
 
-**Last Updated:** 🗓️ September 2026 (Week 4)  
+**Last Updated:** 🗓️ September 2026 (Week 5)
 
 **Happy reviewing!**
