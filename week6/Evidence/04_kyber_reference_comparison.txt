@@ -1,0 +1,18 @@
+KYBER-512 EXTERNAL REFERENCE COMPARISON
+
+Our Renode results:
+KeyGen: 1,157,443 cycles
+Encapsulation: 1,300,194 cycles
+Decapsulation: 1,538,934 cycles
+
+External PQM4/NTTm4 Kyber-512 reference:
+KeyGen: 499,000 cycles
+Encapsulation: 634,000 cycles
+Decapsulation: 597,000 cycles
+
+Status:
+External reference comparison completed.
+
+Important:
+This is NOT Heinz validation because the implementations,
+compiler configuration, and benchmark conditions are not identical.
