@@ -10,7 +10,7 @@
 
 ## 🎯 What's This Project About?
 
-The **Nano-Bee** is a tiny autonomous swarm robot that needs to communicate securely, and it has very limited compute and memory.
+The Nano-Bee project focuses on secure communication for a resource-constrained swarm-robot platform.
 
 This project asks:
 
@@ -18,12 +18,12 @@ This project asks:
 
 I'm benchmarking **4 cryptographic primitives**:
 
-| Primitive                | Type                          | Purpose                          |
-| ------------------------ | ----------------------------- | -------------------------------- |
-| 🔐 **Ascon v1.2**        | Lightweight authenticated encryption | Designed for small devices |
-| 🔐 **ChaCha20-Poly1305** | Authenticated encryption      | Fast & widely used               |
-| 🔐 **Kyber-512**         | Post-quantum KEM | Post-quantum key establishment |
-| 🔐 **SPHINCS+-Haraka-128f** | Post-quantum signatures    | Quantum-resistant signatures     |
+ | Primitive                    | Type                              | Purpose                    |
+| ---------------------------- | --------------------------------- | -------------------------- |
+| 🔐 **Ascon v1.2**            | Lightweight authenticated encryption | Benchmark target        |
+| 🔐 **ChaCha20-Poly1305**     | Authenticated encryption           | Benchmark target            |
+| 🔐 **Kyber-512**              | Post-quantum KEM                  | Benchmark target            |
+| 🔐 **SPHINCS+-Haraka-128f**   | Post-quantum signatures           | Benchmark target            |
 
 **Tool:** Renode (Cortex-M4 emulation environment)
 **Measurement:** Cycle counts, stack measurement where valid, and compiled ELF/code size.
@@ -188,10 +188,11 @@ For a fixed-size KEM operation, **cycles per operation** is the main metric (not
 | Ascon v1.2 | 9,606 (16 B) | 23,028 B | 264 B |
 | ChaCha20-Poly1305 | 40,597 (114 B) | 5,252 B | 544 B |
 | Kyber-512 | KeyGen 1,157,443 | 14,280 B | 9,748 B |
-| SPHINCS+-Haraka-128f | KeyGen 153,849,855 | 28,888 B | ❌ invalid, excluded |
+| SPHINCS+-Haraka-128f | KeyGen 153,849,855 | 28,888 B | Not reported* |
 
 > ⚠️ Ascon (16 B) and ChaCha20 (114 B) used different input sizes, so compare their **cycles/byte**, not raw cycles.
-
+>
+> \* SPHINCS+ peak-stack measurement was invalid and is excluded from quantitative stack comparison. The SPHINCS+ cycle and ELF-size results are valid.
 ---
 
 ### 📏 Analytical sanity check (NOP test)
@@ -296,7 +297,7 @@ These are **project assumptions**, not measured results or official Nano-Bee spe
 | Crypto-specific cycle-accuracy validation |
 | A final FEASIBLE / MARGINAL / NOT FEASIBLE verdict |
 | Energy-per-operation numbers |
-| A valid SPHINCS+ peak-stack result |
+| A valid SPHINCS+ peak-stack measurement result |
 
 ---
 
@@ -308,7 +309,7 @@ These are **project assumptions**, not measured results or official Nano-Bee spe
 | Where's the Week 6 report? | `week6/VESPER-SEC-01-Week6-Deliverable.docx` |
 | Where's the evidence? | `week6/Evidence/` |
 | Where did the Week 6 measurements come from? | Renode emulation |
-| Is SPHINCS+ stack reported? | ❌ No. The measurement was invalid and excluded |
+| Is SPHINCS+ stack reported? | ❌ No. The peak-stack measurement was invalid and excluded |
 | What's next? | Week 7 extension |
 
 ---
