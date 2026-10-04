@@ -1,0 +1,4 @@
+using "C:/Program Files/Renode/platforms/cpus/stm32f4.repl"
+
+dwt: Miscellaneous.DWT @ sysbus 0xE0001000
+    frequency: 168000000
