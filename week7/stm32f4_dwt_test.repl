@@ -1,0 +1,4 @@
+using "platforms/boards/stm32f4_discovery.repl"
+
+dwt: Miscellaneous.DWT @ sysbus 0xE0001000
+    frequency: 168000000
