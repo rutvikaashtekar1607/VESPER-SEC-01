@@ -4,9 +4,19 @@
 **Programme:** VISVAMBHARA Weeks 4–12
 **Domain:** 🛡️ Cybersecurity (Option A)
 **Project:** 🐝 Nano-Bee Secure Communications
-**Status:** ✅ Week 4 complete · ✅ Week 5 complete · ✅ Week 6 complete
+**Status:** ✅ Week 4 complete · ✅ Week 5 complete · ✅ Week 6 complete · ✅ Week 7 extension implemented (validation pending)
 
----
+## 🗺️ Weeks 4–7 at a glance
+
+```mermaid
+flowchart LR
+    W4[🧱 Week 4<br/>Scope + toolchain<br/>✅ done] --> W5[📐 Week 5<br/>Analytical model<br/>✅ done]
+    W5 --> W6[🚀 Week 6<br/>First working artifact<br/>✅ done]
+    W6 --> W7[🔧 Week 7<br/>ASCON multi-size extension<br/>✅ implemented]
+    W7 --> W8[🧪 Week 8<br/>Validation<br/>⏳ next]
+    style W7 fill:#ffd54f,stroke:#f57f17,stroke-width:3px
+
+```
 
 ## 🎯 What's This Project About?
 
@@ -100,6 +110,36 @@ week6/
 │       └── 📂 test/
 └── 📄 VESPER-SEC-01-Week6-Deliverable.docx
 ```
+### 📁 Week 7 Repository Structure — ASCON Extension
+
+```text
+week7/
+├── 📂 evidence/
+│   ├── 01_ascon_week7_renode_results.png
+│   └── 02_ascon_week7_benchmark_results.png
+├── 📂 src/
+│   ├── 📂 ascon/
+│   │   ├── ascon_benchmark.c
+│   │   ├── ascon_benchmark.elf
+│   │   ├── ascon_benchmark.map
+│   │   ├── linker.ld
+│   │   ├── run_ascon_week7.resc
+│   │   ├── startup.s
+│   │   ├── stack_measure.s
+│   │   ├── 📂 ascon-ref/
+│   │   └── 📂 testbuild/
+│   │       ├── ascon_benchmark_test.elf
+│   │       └── ascon_benchmark_test.map
+│   └── 📂 chacha/
+│       ├── chacha_benchmark.c
+│       ├── chacha_benchmark.elf
+│       ├── 📂 chacha-download/
+│       └── 📂 chacha20-poly1305-ref/
+├── stm32f4_dwt_test.repl
+└── VESPER Week7Report.docx
+```
+
+🔎 This tree lists the main Week 7 files and folders. The ASCON reference folder and test-build folder contain additional source and object files. Week 7 extends ASCON benchmarking to four input sizes; the cycle readings remain preliminary pending repeatability checks.
 
 > 🔎 This is a high-level view. Each folder also contains further source files, which are not listed here.
 
@@ -310,7 +350,99 @@ These are **project assumptions**, not measured results or official Nano-Bee spe
 | Where's the evidence? | `week6/Evidence/` |
 | Where did the Week 6 measurements come from? | Renode emulation |
 | Is SPHINCS+ stack reported? | ❌ No. The peak-stack measurement was invalid and excluded |
-| What's next? | Week 7 extension |
+| What's next? | 🧪 Week 8 — Validation: investigate ASCON timing repeatability and compare against a comparable published result. |
+
+---
+
+# 🔧 Week 7: Extension — ASCON Multi-Size Benchmarking
+
+**Status:** ⚙️ Extension implemented and executed · ⚠️ Repeatability and timing accuracy remain unverified
+
+## 🎯 Week 7 Objective
+
+The charter requires a second capability that the Week 6 artifact could not perform.
+
+Week 6 measured ASCON using a single 16-byte plaintext. Week 7 extends the benchmark to four input sizes: **16, 64, 256 and 1,024 bytes**, without modifying Week 6 files or results.
+
+## 🛠️ What Was Added
+
+| Component | Week 7 implementation |
+|---|---|
+| 🔐 Primitive | ASCON v1.2 reference implementation |
+| 🖥️ Target | Cortex-M4 test ELF running in Renode |
+| 📏 Input sizes | 16, 64, 256 and 1,024 bytes |
+| ⏱️ Measurement | DWT cycle-counter readings for each encryption |
+| ✅ Output checks | Encryption return code and expected ciphertext length |
+| 📊 Result tracking | Four cycle values, four validity flags and a completion flag |
+| 📦 Buffer placement | `.bench_buffers` at `0x20010000`, section size `0x810` bytes |
+
+## 📊 Preliminary Results
+
+Two recorded runs produced the following readings:
+
+| Plaintext size | First recorded run | Subsequent recorded run | Status |
+|---|---:|---:|---|
+| 16 bytes | 10,903 cycles | 10,903 cycles | ✅ Matched |
+| 64 bytes | 13,813 cycles | 13,813 cycles | ✅ Matched |
+| 256 bytes | 38,650 cycles | 25,684 cycles | ⚠️ Differed |
+| 1,024 bytes | 137,998 cycles | 150,964 cycles | ⚠️ Differed |
+
+⚠️ **Important:** These are preliminary observations, not validated timing results. The two longer-message measurements differed between runs. Do not use these values to claim validated performance or make a final feasibility decision.
+
+## ✅ What Worked
+
+- The ASCON test ELF loaded and executed in the recorded Renode session.
+- The completion flag, `result_done`, returned `1`.
+- All four validity flags returned `1`.
+- Four non-zero values were read from the allocated cycle-result addresses.
+- ELF inspection confirmed the `.bench_buffers` section placement.
+- A Renode screenshot was captured as supporting evidence.
+
+These checks demonstrate execution and successful output-length checks. They do **not** independently prove cycle-measurement accuracy.
+
+## ⚠️ Limitations and Open Issues
+
+| Issue | Current status |
+|---|---|
+| Repeatability of 256-byte and 1,024-byte measurements | ⚠️ Unresolved |
+| Saved replay script independently demonstrated | ❌ Not yet demonstrated |
+| Exact correspondence between benchmark source and test ELF | ⚠️ Not conclusively verified |
+| DWT timing accuracy against a comparable published cryptographic result | ❌ Not validated |
+| Final cycles-per-byte, energy and resource-feasibility conclusions | ⏳ Deferred |
+
+The firmware disables the DWT counter before setting `result_done`. A post-execution read returned `DWT_CTRL = 0` and `DWT_CYCCNT = 0x00049D40`. These post-execution values do not establish the accuracy of the four recorded measurements.
+
+## 📸 Week 7 Evidence
+
+The available evidence includes:
+
+- ASCON benchmark source file
+- Test ELF and map file
+- Linker configuration
+- Recorded Renode command sequence
+- Memory-read outputs showing result flags and cycle values
+- Renode benchmark screenshot
+
+**Reproducibility note:** The recorded session provides preliminary execution evidence. An independently replayed setup and repeatable timing results remain outstanding.
+
+## 🔄 Changes to the Plan
+
+Week 6 files and results remain unchanged. The discrepancies in the longer-message readings will be investigated rather than resolved by selecting or averaging values without evidence.
+
+No final cryptographic performance or feasibility claim is made from the current readings.
+
+## 🚀 Week 8: Validation — Next Objective
+
+The next stage will focus on:
+
+1. Investigating repeatability across all four ASCON input sizes.
+2. Establishing a reproducible Renode execution procedure.
+3. Verifying the source-to-ELF build relationship.
+4. Comparing against a genuinely comparable published cryptographic result.
+5. Recording discrepancies and investigating the emulation configuration if the project's stated tolerance is exceeded.
+6. Keeping unresolved limitations explicit.
+
+**Week 7 conclusion:** The multi-size ASCON extension was implemented and executed, and preliminary output checks passed. Repeatability and cryptographic timing accuracy remain open verification items.
 
 ---
 
@@ -324,4 +456,4 @@ These are **project assumptions**, not measured results or official Nano-Bee spe
 
 ---
 
-**Last Updated:** 🗓️ Week 6
+**Last Updated:** 🗓️ Week 7 — ASCON extension implemented; timing repeatability and accuracy remain unverified.
