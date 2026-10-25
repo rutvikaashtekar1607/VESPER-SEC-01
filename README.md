@@ -477,7 +477,6 @@ This section closes the README. Everything above is unchanged, including all Wee
 | Measure energy per operation and issue a feasibility verdict, only once timing is validated | Week 5 model; Week 6 "does NOT claim" |
 | Valid SPHINCS+ peak-stack measurement | Week 6, Limitations |
 
-The next owner is to be named by the project lead.
 
 ## 🔗 Where to find everything
 
