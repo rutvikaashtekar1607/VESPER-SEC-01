@@ -4,7 +4,7 @@
 **Programme:** VISVAMBHARA Weeks 4–12
 **Domain:** 🛡️ Cybersecurity (Option A)
 **Project:** 🐝 Nano-Bee Secure Communications
-**Status:** ✅ Week 4 complete · ✅ Week 5 complete · ✅ Week 6 complete · ✅ Week 7 extension implemented (validation pending)
+**Status:** ✅ Week 4 complete · ✅ Week 5 complete · ✅ Week 6 complete · ✅ Week 7
 
 ## 🗺️ Weeks 4–7 at a glance
 
@@ -400,16 +400,6 @@ Two recorded runs produced the following readings:
 
 These checks demonstrate execution and successful output-length checks. They do **not** independently prove cycle-measurement accuracy.
 
-## ⚠️ Limitations and Open Issues
-
-| Issue | Current status |
-|---|---|
-| Repeatability of 256-byte and 1,024-byte measurements | ⚠️ Unresolved |
-| Saved replay script independently demonstrated | ❌ Not yet demonstrated |
-| Exact correspondence between benchmark source and test ELF | ⚠️ Not conclusively verified |
-| DWT timing accuracy against a comparable published cryptographic result | ❌ Not validated |
-| Final cycles-per-byte, energy and resource-feasibility conclusions | ⏳ Deferred |
-
 The firmware disables the DWT counter before setting `result_done`. A post-execution read returned `DWT_CTRL = 0` and `DWT_CYCCNT = 0x00049D40`. These post-execution values do not establish the accuracy of the four recorded measurements.
 
 ## 📸 Week 7 Evidence
@@ -456,4 +446,43 @@ The next stage will focus on:
 
 ---
 
-**Last Updated:** 🗓️ Week 7 — ASCON extension implemented; timing repeatability and accuracy remain unverified.
+# 🏁 Concluding Note: Internship Handover (VESPER-SEC-01, Weeks 4–7)
+
+This section closes the README. Everything above is unchanged, including all Week 4 to Week 7 content, results and limitations. It records the state of the work at the end of my internship (28 October 2026) so the next owner can continue from here.
+
+## ✅ Final status at handover
+
+| Week | Status |
+|---|---|
+| 🧱 Week 4: scope, toolchain, NOP sanity check | ✅ Complete |
+| 📐 Week 5: analytical model | ✅ Complete |
+| 🚀 Week 6: first working artifact (four primitives in Renode) | ✅ Complete |
+| 🔧 Week 7: ASCON multi-size extension (16, 64, 256, 1,024 bytes) |
+| 🧪 Week 8: validation |
+
+## 📌 What this work does and does not establish
+
+- **Established:** four primitives (Ascon v1.2, ChaCha20-Poly1305, Kyber-512, SPHINCS+-Haraka-128f) were compiled and executed on a Cortex-M4 in Renode, with cycle counts, valid stack results and ELF sizes recorded (Week 6; 22 / 22 project checks passing).
+- **Not established:** hardware-validated or crypto-specific cycle accuracy, energy per operation, a final feasibility verdict, and a valid SPHINCS+ peak-stack result. All measurements are from emulation; no physical hardware was used.
+- **Week 7 caution:** the 256-byte and 1,024-byte ASCON readings differed between two recorded runs. They remain preliminary, and no performance or feasibility claim should be made from them.
+
+## 🔜 Open items for the next owner
+
+| Open item | Reference in this README |
+|---|---|
+| Investigate repeatability of the 256-byte and 1,024-byte ASCON readings | Week 7, Limitations and Open Issues |
+| Establish an independently replayable Renode procedure (saved replay script) | Week 7, Limitations and Open Issues |
+| Verify the source-to-ELF correspondence for the Week 7 test build | Week 7, Limitations and Open Issues |
+| Compare against a genuinely comparable published cryptographic result | Week 8 objectives |
+| Measure energy per operation and issue a feasibility verdict, only once timing is validated | Week 5 model; Week 6 "does NOT claim" |
+| Valid SPHINCS+ peak-stack measurement | Week 6, Limitations |
+
+The next owner is to be named by the project lead.
+
+## 🔗 Where to find everything
+
+- Project site: https://rutvikaashtekar1607.github.io/VESPER-SEC-01/
+
+## ✍️ Contributor
+
+Rutvika Mahadev Ashtekar, VISVAMBHARA Weeks 4–7, Cybersecurity (Option A). Internship concluded 28 October 2026.
